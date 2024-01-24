@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NewConverterApp</string>
+
+    <string name="title">Currency converter</string>
+    <string name="hint_text">0</string>
+    <string name="balances_title">My Balances</string>
+    <string name="arrow">arrow</string>
+    <string name="currency_title">Currency exchange</string>
+    <string name="sell">Sell</string>
+    <string name="receive">Receive</string>
+    <string name="line">line</string>
+    <string name="submit">Submit</string>
 </resources>
