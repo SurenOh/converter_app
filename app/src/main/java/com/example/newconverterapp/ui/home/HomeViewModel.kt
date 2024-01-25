@@ -11,6 +11,8 @@ import com.example.newconverterapp.model.CurrencyModel
 import com.example.newconverterapp.model.ErrorMessage
 import com.example.newconverterapp.model.Rate
 import com.example.newconverterapp.repository.balance.BalanceRepository
+import com.example.newconverterapp.repository.currency.CurrencyRepository
+import com.example.newconverterapp.repository.currency.CurrencyStatus
 import com.example.newconverterapp.util.roundTwoDigits
 import com.example.newconverterapp.util.toDoubleRound
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +20,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val balanceRepository: BalanceRepository
+    private val balanceRepository: BalanceRepository,
+    private val currencyRepository: CurrencyRepository
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<UiState>()
@@ -130,7 +133,24 @@ class HomeViewModel(
     }
 
     private fun getCurrency() {
+        currencyRepository.getCurrency { status ->
+            when (status) {
+                is CurrencyStatus.StatusError -> _uiState.postValue(UiState.OnError(ErrorMessage.ServerError))
+                is CurrencyStatus.StatusErrorHttp -> {}
+                is CurrencyStatus.StatusSuccess -> {
+                    val model = status.model
+                    model.base?.let { baseCurrencyValue = it }
+                    currencies = model.rates
+                    val filteredRates = getFilteredRates(model.rates)
+                    _uiState.postValue(UiState.OnGetCurrency(model, filteredRates))
+                }
+            }
 
+        }
+    }
+
+    private fun getFilteredRates(allRates: List<Rate>) = balances.flatMap { element ->
+        allRates.filter { it.code == element.code }
     }
 
     companion object {

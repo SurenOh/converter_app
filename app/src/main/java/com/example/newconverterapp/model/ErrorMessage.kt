@@ -7,4 +7,5 @@ enum class ErrorMessage(val message: String) {
     IncorrectValue("Please type correct value!"),
     Unknown("Error! Please try again later!"),
     NoInternet("Internet is unavailable!"),
+    ServerError("Server error!")
 }

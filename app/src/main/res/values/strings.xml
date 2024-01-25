@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">NewConverterApp</string>
-
     <string name="title">Currency converter</string>
     <string name="hint_text">0</string>
     <string name="balances_title">My Balances</string>
@@ -17,6 +16,5 @@
     <string name="successful_conversion_title">Currency converted</string>
     <string name="successful_description">You have converted %1$s %2$s to %3$s %4$s. Commission Fee: %5$s %6$s</string>
     <string name="label_error">Error</string>
-
     <string name="select">Select</string>
 </resources>
